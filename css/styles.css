@@ -1,9 +1,12 @@
 
 
-h2{
-    font-family: 'Game of Thrones';
-    font-weight: normal;
-    font-style: normal;
-    text-align:center;
-    color:whitesmoke;
+#titulo{
+    margin-right: 39%;
+    margin-left: 39%;
+    font-family: "Game of thrones";
+    font-size: 3em;
+    color: whitesmoke;
+    position: absolute;
+    z-index: 10;
+    margin-top: 1%;
 }
