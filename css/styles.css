@@ -1,4 +1,7 @@
 
+*{
+    font-family: "Game of thrones";
+}
 
 #titulo{
     margin-right: 39%;
@@ -9,4 +12,17 @@
     position: absolute;
     z-index: 10;
     margin-top: 1%;
+}
+
+a{
+    text-decoration:none !important;
+    
+}
+
+.jumbotron{
+    padding:0;
+}
+
+#libros{
+    width:100%;
 }
