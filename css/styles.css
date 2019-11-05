@@ -16,13 +16,38 @@
 
 a{
     text-decoration:none !important;
-    
 }
 
 .jumbotron{
-    padding:0;
+    background-position:center;
+    background-repeat:no-repeat;
+    background-size:cover;
+    margin-bottom:0;
 }
 
 #libros{
     width:100%;
+    
+}
+
+
+
+.card{
+    background-color:unset;
+}
+
+.card .btn-link{
+    color:white;
+}
+
+.card-body{
+    color:white;
+}
+
+.col{
+    padding:0;
+}
+
+.row{
+    margin-bottom:50px;
 }
