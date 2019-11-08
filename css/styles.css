@@ -23,6 +23,7 @@ a{
     background-repeat:no-repeat;
     background-size:cover;
     margin-bottom:0;
+    height:1080px;
 }
 
 #libros{
@@ -50,4 +51,11 @@ a{
 
 .row{
     margin-bottom:50px;
+}
+
+#input{
+    width:80%;
+    margin-left:10%;
+    display:none;
+    margin-bottom:30px;
 }

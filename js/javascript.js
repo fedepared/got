@@ -1,6 +1,6 @@
 const titulo= document.querySelector("#titulo");
 const dragon=document.querySelector("#dragon");
-let contenedor=document.querySelector("#contenedor");
+let contenedor=document.querySelector(".contenedorLibros");
 const about= document.querySelector("#about");
 const books= document.querySelector("#books");
 const characters= document.querySelector("#characters");
@@ -8,9 +8,11 @@ const houses= document.querySelector("#houses");
 const navBar=document.querySelector("#navbarToggleExternalContent");
 const botones1=document.querySelector("#botones1");
 const botones2=document.querySelector("#botones2");
-const row1=document.querySelector("#books1");
-const row2=document.querySelector("#books2");
-// const imagen=document.createElement("img");
+const nombreLibro=document.querySelector("#nombreLibro");
+const contenedorPersonajes=document.querySelector("#contenedorPersonajes");
+const cardDeck=document.querySelector(".card-deck");
+const row3=document.querySelector("#row3");
+const buscaPer=document.querySelector("#personaje");
 
 $('#carousel').on('slid.bs.carousel', function () {
     if(dragon.classList.contains("active")){
@@ -23,15 +25,17 @@ $('#carousel').on('slide.bs.carousel', function () {
     
 })
 
+botones1.style.margin="0";
+botones2.style.margin="0";
+nombreLibro.style.margin="0";
 
 books.addEventListener("click",(e)=>{
     e.preventDefault();
+    botones1.style.marginBottom="50px";
+    botones1.style.marginBottom="50px";
+    nombreLibro.style.all="initial";
     navBar.setAttribute("class","collapse");
 
-    // const accordion=document.createElement("div");
-    // accordion.setAttribute("class","accordion");
-    // accordion.setAttribute("id","books");
-    // contenedor.appendChild(accordion);
     fetch("/img/libros.jpg")
     .then((response)=>{
         return response.blob();
@@ -80,36 +84,75 @@ books.addEventListener("click",(e)=>{
                 botonCol.appendChild(colMultiCollapse);
                 colMultiCollapse.appendChild(cardBody);
             }
-            
-            // let card = document.createElement("div");
-            // card.setAttribute("class","card");
-            // let cardHeader=document.createElement("div");
-            // cardHeader.setAttribute("class","card-header");
-            // cardHeader.setAttribute("id","c"+e+"");
-            // let h2=document.createElement("h2");
-            // h2.setAttribute("class","mb-0");
-            // let boton=document.createElement("button");
-            // boton.setAttribute("class","btn"+" "+"btn-link"+" "+"collapsed");
-            // boton.setAttribute("type","button");
-            // boton.setAttribute("data-toggle","collapse");
-            // boton.setAttribute("data-target","#b"+e+"")
-            // boton.setAttribute("aria-expanded","false");
-            // boton.setAttribute("aria-controls","b"+e+"");
-            // boton.innerHTML=i.name;
-            // accordion.appendChild(card);
-            // card.appendChild(cardHeader);
-            // cardHeader.appendChild(h2);
-            // h2.appendChild(boton);
-            // let collapseShow=document.createElement("div");
-            // collapseShow.setAttribute("id","b"+e+"")
-            // collapseShow.setAttribute("class","collapse");
-            // collapseShow.setAttribute("aria-labelledby","c"+e+"");
-            // collapseShow.setAttribute("data-parent","#books");
-            // let cardBody=document.createElement("div");
-            // cardBody.setAttribute("class","card-body");
-            // cardBody.innerHTML="ISBN: "+i.isbn+"<br>Autor/es: "+i.authors+"<br>Paginas: "+i.numberOfPages+"<br>Publicado por: "+i.publisher+"<br>pais: "+i.country+"<br>Fecha de publicacion:"+i.released+"<br>"
-            // card.appendChild(collapseShow);
-            // collapseShow.appendChild(cardBody);
-            });
         });
+    });
 })
+
+
+
+document.querySelector("#btnBuscar").addEventListener("click",()=>{
+    
+    for(let j =1;j<1000;j++){
+    
+        fetch("https://anapioficeandfire.com/api/characters/"+j)
+            .then((response)=>{
+                return response.json();
+            })
+            .then((personajes)=>{
+                // if(personajes.name.toUpperCase() === buscaPer.value.toLowerCase()){
+                    // console.log("valor encontrado",personajes.name)
+                    // console.log("valor buscado",buscaPer.value.toLoweCase());
+                    // console.log("ENCONTRADO")
+                     
+                if(buscaPer.value.toLowerCase() == personajes.name.toLowerCase())
+                {
+                    let col = document.createElement("div");
+                    col.setAttribute("class","col");
+                    row3.appendChild(col);
+                    let card=document.createElement("div");
+                    card.setAttribute("class","card text-white bg-secondary");
+                    col.appendChild(card);
+                    let cardImg=document.createElement("img");
+                    cardImg.setAttribute("class","card-img-top");
+                    cardImg.setAttribute("src","");
+                    let cardBody=document.createElement("div");
+                    cardBody.setAttribute("class","card-body");
+                    card.appendChild(cardImg);
+                    card.appendChild(cardBody);
+                    let cardTitle=document.createElement("h5");
+                    cardTitle.setAttribute("class","card-title");
+                    let p = document.createElement("p");
+                    p.setAttribute("class","card-text");
+                    p.innerHTML="Cultura: "+personajes.culture+"<br>Fecha de nacimiento: "+personajes.born+"<br> Muerte: "+personajes.died+"<br> titulos: "+personajes.titles+"<br>alias: "+personajes.aliases+"<br>padre:"+personajes.father+"<br>madre: "+personajes.mother+"<br>esposa: "+personajes.spouse+"<br>lealtad a: " + personajes.allegiances + "<br>libros en los que aparece: <br>"+personajes.povBooks
+                    cardBody.appendChild(cardTitle);
+                    cardTitle.innerHTML=""+personajes.name+"";
+                    cardBody.appendChild(p);
+                }
+                else{
+                    document.querySelector("#alerta").style.display="block";
+                }
+
+                     
+            })
+    }
+})
+
+characters.addEventListener("click",(e)=>{
+    e.preventDefault();
+    navBar.setAttribute("class","collapse");
+    fetch("/img/characters.jpg")
+    .then((response)=>{
+        return response.blob();
+    })
+    .then((response)=>{
+        let imagen2 = URL.createObjectURL(response);
+        contenedorPersonajes.style.backgroundImage="url(" + "'" +imagen2+ "'" + ")";
+        contenedorPersonajes.setAttribute("class","jumbotron");
+        contenedorPersonajes.scrollIntoView();
+        document.querySelector("#input").style.display="flex";
+    });
+    
+    
+   
+
+});
