@@ -1,6 +1,7 @@
 
 *{
-    font-family: "Game of thrones";
+    font-family: 'Cinzel', serif;
+
 }
 
 #titulo{
@@ -23,7 +24,7 @@ a{
     background-repeat:no-repeat;
     background-size:cover;
     margin-bottom:0;
-    height:1080px;
+    
 }
 
 #libros{
@@ -54,8 +55,12 @@ a{
 }
 
 #input{
-    width:80%;
-    margin-left:10%;
+    width:60%;
     display:none;
     margin-bottom:30px;
+    height:110%;
+}
+
+.col-4{
+    margin-top:10px;
 }

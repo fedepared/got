@@ -14,6 +14,10 @@ const cardDeck=document.querySelector(".card-deck");
 const row3=document.querySelector("#row3");
 const buscaPer=document.querySelector("#personaje");
 
+
+
+
+
 $('#carousel').on('slid.bs.carousel', function () {
     if(dragon.classList.contains("active")){
         titulo.style.color = "black";
@@ -53,6 +57,7 @@ books.addEventListener("click",(e)=>{
         })
         .then((libros)=>{
             libros.forEach((i,e) => {
+            nombreLibros.push(i.name);
             let button = document.createElement("button");
             button.setAttribute("class","btn btn-light");
             button.setAttribute("type","button");
@@ -90,24 +95,44 @@ books.addEventListener("click",(e)=>{
 
 
 
-document.querySelector("#btnBuscar").addEventListener("click",()=>{
-    
-    for(let j =1;j<1000;j++){
+document.querySelector("#btnBuscar").addEventListener("click",(e)=>{
+  row3.innerHTML="";
+  let arrayPersonajes=[];
+  let contador=0;
+  let espos;
+  let tuVieja;
+    function mario(){
+        contador++;
+        if(contador==1509){
+            if(arrayPersonajes.length==0){
+                document.querySelector("#alerta").style.display="block";
+            }
+        }
+    }
+    for(let j =1;j<1509;j++){
     
         fetch("https://anapioficeandfire.com/api/characters/"+j)
             .then((response)=>{
                 return response.json();
             })
             .then((personajes)=>{
-                // if(personajes.name.toUpperCase() === buscaPer.value.toLowerCase()){
-                    // console.log("valor encontrado",personajes.name)
-                    // console.log("valor buscado",buscaPer.value.toLoweCase());
-                    // console.log("ENCONTRADO")
-                     
-                if(buscaPer.value.toLowerCase() == personajes.name.toLowerCase())
-                {
+                let pers=personajes.name.toLowerCase();
+                let busc=buscaPer.value;                
+                busc=busc.toLowerCase();
+                if(pers.includes(busc)){
+                    if(personajes.spouse!="")
+                    {
+                        fetch(personajes.spouse)
+                            .then((response2)=>{
+                                return response2.json();
+                            })
+                            .then((response3)=>{
+                                espos=response3.name;
+                            })
+                    }   
+                    arrayPersonajes.push(pers);
                     let col = document.createElement("div");
-                    col.setAttribute("class","col");
+                    col.setAttribute("class","col-4");
                     row3.appendChild(col);
                     let card=document.createElement("div");
                     card.setAttribute("class","card text-white bg-secondary");
@@ -123,18 +148,22 @@ document.querySelector("#btnBuscar").addEventListener("click",()=>{
                     cardTitle.setAttribute("class","card-title");
                     let p = document.createElement("p");
                     p.setAttribute("class","card-text");
-                    p.innerHTML="Cultura: "+personajes.culture+"<br>Fecha de nacimiento: "+personajes.born+"<br> Muerte: "+personajes.died+"<br> titulos: "+personajes.titles+"<br>alias: "+personajes.aliases+"<br>padre:"+personajes.father+"<br>madre: "+personajes.mother+"<br>esposa: "+personajes.spouse+"<br>lealtad a: " + personajes.allegiances + "<br>libros en los que aparece: <br>"+personajes.povBooks
+                    p.innerHTML="Cultura: "+personajes.culture+"<br>Fecha de nacimiento: "+personajes.born+"<br> Muerte: "+personajes.died+"<br> titulos: "+personajes.titles+"<br>alias: "+personajes.aliases+"<br>padre:"+personajes.father+"<br>madre: "+personajes.mother+"<br>esposa/o: "+personajes.spouse+"<br>lealtad a: " + personajes.allegiances + "<br>libros en los que aparece: <br>"+personajes.povBooks
                     cardBody.appendChild(cardTitle);
                     cardTitle.innerHTML=""+personajes.name+"";
                     cardBody.appendChild(p);
                 }
-                else{
-                    document.querySelector("#alerta").style.display="block";
-                }
-
-                     
-            })
+                mario();
+            }) 
+        .catch((error)=>{
+            mario();
+        })
     }
+    // console.log(arrayPersonajes.length);
+    //  if(arrayPersonajes==null){
+    //     document.querySelector("#alerta").style.display="block";
+            
+    //  }
 })
 
 characters.addEventListener("click",(e)=>{
