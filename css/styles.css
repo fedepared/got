@@ -64,3 +64,10 @@ a{
 .col-4{
     margin-top:10px;
 }
+
+#contenedorDeLibros{
+    display:none;
+}
+#contenedorPersonajes{
+    display:none;
+}

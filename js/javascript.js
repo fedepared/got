@@ -34,6 +34,8 @@ botones2.style.margin="0";
 nombreLibro.style.margin="0";
 
 books.addEventListener("click",(e)=>{
+    contenedorPersonajes.style.display="none";
+    document.querySelector("#contenedorDeLibros").style.display="block";
     e.preventDefault();
     botones1.style.marginBottom="50px";
     botones1.style.marginBottom="50px";
@@ -57,7 +59,7 @@ books.addEventListener("click",(e)=>{
         })
         .then((libros)=>{
             libros.forEach((i,e) => {
-            nombreLibros.push(i.name);
+            // nombreLibro.push(i.name);
             let button = document.createElement("button");
             button.setAttribute("class","btn btn-light");
             button.setAttribute("type","button");
@@ -168,6 +170,8 @@ document.querySelector("#btnBuscar").addEventListener("click",(e)=>{
 
 characters.addEventListener("click",(e)=>{
     e.preventDefault();
+    contenedorPersonajes.style.display="block";
+    document.querySelector("#contenedorDeLibros").style.display="none";
     navBar.setAttribute("class","collapse");
     fetch("/img/characters.jpg")
     .then((response)=>{
